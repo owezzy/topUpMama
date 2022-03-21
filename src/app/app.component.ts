@@ -17,4 +17,10 @@ export class AppComponent {
     private router: Router,
   ) {
   }
+
+  signOut() {
+    this.router.navigateByUrl('/login').then(() =>
+      console.log(`--------signOut----`)
+    )
+  }
 }

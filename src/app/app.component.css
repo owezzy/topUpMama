@@ -35,3 +35,6 @@ mat-sidenav {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.example-spacer {
+  flex: 1 1 auto;
+}

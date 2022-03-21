@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {EmailValidation, PasswordValidation} from "../../assets/common.validation";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -25,6 +26,8 @@ import {EmailValidation, PasswordValidation} from "../../assets/common.validatio
       }
 
       #sign-up-container {
+        background-color: #c7c7c7;
+        height: 100%;
     }
 
 
@@ -56,6 +59,7 @@ export class SignUpComponent {
 
   constructor(
     private formBuilder: FormBuilder,
+    private authService: AuthService
 
   ) {
 
@@ -68,5 +72,11 @@ export class SignUpComponent {
   signUp() {
     const submittedForm = this.signUpForm.value
     console.log('------------submittedForm---------------',submittedForm)
+    this.authService.signUp(submittedForm).subscribe(
+      response => {
+        console.log('---------response------------', response)
+
+      }
+    )
   }
 }

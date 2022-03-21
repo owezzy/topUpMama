@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {EmailValidation, PasswordValidation} from "../../assets/common.validation";
 import {FormBuilder} from "@angular/forms";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,8 @@ import {FormBuilder} from "@angular/forms";
     }
 
     #sign-up-container {
+      background-color: #c7c7c7;
+      height: 100%;
     }
 
 
@@ -53,6 +56,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -64,5 +68,11 @@ export class LoginComponent implements OnInit {
   login() {
     const loginFormData = this.loginForm.value
     console.log('---------loginFormData------------', loginFormData)
+    this.authService.login(loginFormData).subscribe(
+      response => {
+        console.log('---------Login-response------------', response)
+
+      }
+    )
   }
 }

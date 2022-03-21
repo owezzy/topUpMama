@@ -9,6 +9,9 @@
   </button>
   <span>TopUp MaMa</span>
   <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon" aria-label="My Current Location">
+    <mat-icon>my_location</mat-icon>
+  </button>
 </mat-toolbar>
 <mat-sidenav-container class="app-sidenav-container">
   <mat-sidenav
@@ -24,7 +27,6 @@
         <mat-icon class="nav-icons">account_circle </mat-icon>
         My Account
       </a>
-      <mat-divider></mat-divider>
       <a
           mat-list-item
           routerLinkActive="active-link"
@@ -32,6 +34,15 @@
         >
           <mat-icon class="nav-icons">people </mat-icon>
           Users
+        </a>
+      <mat-divider></mat-divider>
+      <a
+          mat-list-item
+          routerLinkActive="active-link"
+          (click)="signOut()"
+        >
+          <mat-icon class="nav-icons">cancel </mat-icon>
+          Logout
         </a>
     </mat-nav-list>
   </mat-sidenav>
