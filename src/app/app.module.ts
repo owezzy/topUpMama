@@ -17,6 +17,9 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {CommonModule} from "@angular/common";
 import { UsersComponent } from './users/users.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {environment} from "../environments/environment";
+import { MapsUserLocationComponent } from './maps-user-location/maps-user-location.component';
+import {GoogleMapsModule} from "@angular/google-maps";
 
 @NgModule({
   declarations: [
@@ -25,7 +28,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     HomeComponent,
     PageNotFoundComponent,
     SignUpComponent,
-    UsersComponent
+    UsersComponent,
+    MapsUserLocationComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +42,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     RouterModule,
     BrowserAnimationsModule,
     FormsModule,
+    GoogleMapsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
     MatPaginatorModule

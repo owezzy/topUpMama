@@ -66,6 +66,11 @@
                 >
                   Password is at least 8 characters long
                 </mat-error>
+                <mat-error
+                  *ngIf="password?.hasError('pattern')"
+                >
+                  Password should contain at least both cases alphabet letters, a number, and special characters (like an & or #).
+                </mat-error>
               </mat-form-field>
             </div>
 

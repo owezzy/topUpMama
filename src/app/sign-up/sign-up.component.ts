@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {EmailValidation, PasswordValidation} from "../../assets/common.validation";
 import {AuthService} from "../services/auth.service";
@@ -8,35 +8,36 @@ import {AuthService} from "../services/auth.service";
   templateUrl: './sign-up.component.html',
   styles: [
     ` .sign-up-text {
-        text-align: center;
-        line-height: 1.5;
-        margin: 0;
-        padding: 5px;
-      }
+      text-align: center;
+      line-height: 1.5;
+      margin: 0;
+      padding: 5px;
+    }
 
-      .sign-up-title {
-        font-weight: bold;
-        font-size: 25px;
-        color: #2c2c2cd9;
-      }
-      .sign-up-subtitle {
-        color: rgb(0 0 0 / 66%);
-        font-size: 16px;
-        text-align: center;
-      }
+    .sign-up-title {
+      font-weight: bold;
+      font-size: 25px;
+      color: #2c2c2cd9;
+    }
 
-      #sign-up-container {
-        background-color: #c7c7c7;
-        height: 100%;
+    .sign-up-subtitle {
+      color: rgb(0 0 0 / 66%);
+      font-size: 16px;
+      text-align: center;
+    }
+
+    #sign-up-container {
+      background-color: #c7c7c7;
+      height: 100%;
     }
 
 
     .sign-up-buttons {
-        padding-top: 15px
+      padding-top: 15px
     }
 
     button {
-        margin-bottom: 8px;
+      margin-bottom: 8px;
     }
 
     @media only screen and (min-width: 600px) {
@@ -47,9 +48,9 @@ import {AuthService} from "../services/auth.service";
     `
   ]
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnChanges {
 
-  signUpForm =  this.formBuilder.group({
+  signUpForm = this.formBuilder.group({
     email: ['', EmailValidation],
     password: ['', PasswordValidation],
   });
@@ -60,10 +61,14 @@ export class SignUpComponent {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService
-
   ) {
 
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('------------submittedForm---------------',this.signUpForm.errors)
+    }
+
 
   get email() { return this.signUpForm.get('email'); }
   get password() { return this.signUpForm.get('password'); }

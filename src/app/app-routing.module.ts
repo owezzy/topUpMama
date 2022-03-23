@@ -5,10 +5,12 @@ import {HomeComponent} from "./home/home.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {SignUpComponent} from "./sign-up/sign-up.component";
 import {UsersComponent} from "./users/users.component";
+import {MapsUserLocationComponent} from "./maps-user-location/maps-user-location.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
+  {path: 'location', component: MapsUserLocationComponent},
   {path: 'home', component: HomeComponent},
   {path: 'users', component: UsersComponent},
   {path: 'signup', component: SignUpComponent},

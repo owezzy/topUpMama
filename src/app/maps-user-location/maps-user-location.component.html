@@ -1,0 +1,43 @@
+<ng-container >
+<div fxLayout="row" id="maps-container" fxLayoutAlign="center center">
+<mat-card>
+  <mat-card-title style="text-align: center; margin: 21px">
+    user Approx. current location from GoogleMaps:
+    <br>
+    <br>
+    <p>{{ this.listingPlace }}</p>
+  </mat-card-title>
+<mat-card-content>
+  <input #mapSearchField class="my-map-search-field"  placeholder="Enter Address To Search"  type="search"/>
+  <google-map
+    height="70vh"
+    width="90vw"
+    [zoom]="zoom"
+    [center]="center"
+    [options]="options"
+    (mapClick)="click($event)"
+  >
+    <map-marker
+      #markerElem
+      *ngFor="let marker of markers"
+      [position]="marker.position"
+      [draggable]="true"
+      [label]="marker.label"
+      [title]="marker.title"
+      [options]="marker.options"
+      (mapClick)="openInfo(markerElem, marker.info)"
+
+    >
+    </map-marker>
+    <map-info-window>{{ infoContent }}</map-info-window>
+  </google-map>
+  <p>{{ logInfo }}</p>
+</mat-card-content>
+  <mat-card-actions  fxLayout="row" fxLayoutAlign="space-evenly center">
+    <button color="primary" mat-raised-button (click)="zoomIn()">Zoom in</button>
+    <button color="primary" mat-raised-button  (click)="zoomOut()">Zoom out</button>
+    <button mat-raised-button   (click)="logCenter()">Log center</button>
+    <button color="accent" mat-raised-button  (click)="addMarker()">Add marker</button> </mat-card-actions>
+</mat-card>
+</div>
+</ng-container>

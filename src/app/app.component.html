@@ -28,6 +28,14 @@
         My Account
       </a>
       <a
+        mat-list-item
+        routerLinkActive="active-link"
+        [routerLink]="['location']"
+      >
+        <mat-icon class="nav-icons">my_location </mat-icon>
+        My Location
+      </a>
+      <a
           mat-list-item
           routerLinkActive="active-link"
           [routerLink]="['users']"
