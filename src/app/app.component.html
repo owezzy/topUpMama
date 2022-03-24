@@ -1,17 +1,13 @@
-<div class="app-container">
+<div class="app-container" *ngIf="authStatus$ | async as authState">
 
 <mat-toolbar
   color="primary"
   fxLayoutGap="8px"
   class="toolbar app-toolbar">
-  <button mat-icon-button (click)="sidenav.toggle()" class="example-icon" aria-label="Example icon-button with menu icon">
+  <button *ngIf="authState.isLoggedIn"  mat-icon-button (click)="sidenav.toggle()" class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
   <span>TopUp MaMa</span>
-  <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon" aria-label="My Current Location">
-    <mat-icon>my_location</mat-icon>
-  </button>
 </mat-toolbar>
 <mat-sidenav-container class="app-sidenav-container">
   <mat-sidenav
@@ -55,10 +51,12 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content
+    fullscreen
     [@routeAnimations]="
         outlet && outlet.isActivated && outlet.activatedRouteData
       ">
     <router-outlet #outlet="outlet"></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<app-footer></app-footer>
 </div>

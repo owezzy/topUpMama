@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -7,7 +7,7 @@ import { LoginComponent } from './login/login.component';
 import {AppRoutingModule} from "./app-routing.module";
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +20,10 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {environment} from "../environments/environment";
 import { MapsUserLocationComponent } from './maps-user-location/maps-user-location.component';
 import {GoogleMapsModule} from "@angular/google-maps";
+import {ConfirmDialogComponent} from "./users/confirm-dialog/confirm-dialog.component";
+import {AuthService} from "./services/auth.service";
+import {appInitializer, ErrorInterceptor, JwtInterceptor} from "./_helpers";
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,9 @@ import {GoogleMapsModule} from "@angular/google-maps";
     PageNotFoundComponent,
     SignUpComponent,
     UsersComponent,
-    MapsUserLocationComponent
+    MapsUserLocationComponent,
+    ConfirmDialogComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +53,11 @@ import {GoogleMapsModule} from "@angular/google-maps";
     FlexLayoutModule,
     MatPaginatorModule
   ],
-  providers: [],
+  providers: [
+    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService] },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

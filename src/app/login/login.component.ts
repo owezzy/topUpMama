@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {EmailValidation, PasswordValidation} from "../../assets/common.validation";
 import {FormBuilder} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -53,13 +54,19 @@ export class LoginComponent implements OnInit {
     password: ['', PasswordValidation],
   });
   hide = true;
+  returnUrl: any;
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router,
+
   ) { }
 
   ngOnInit(): void {
+   this.route.queryParamMap.subscribe((queryParams) => this.returnUrl = queryParams.get('returnUrl') || '/')
+
   }
 
   get email() { return this.loginForm.get('email'); }
@@ -67,10 +74,11 @@ export class LoginComponent implements OnInit {
 
   login() {
     const loginFormData = this.loginForm.value
-    console.log('---------loginFormData------------', loginFormData)
+    // console.log('---------loginFormData------------', loginFormData)
     this.authService.login(loginFormData).subscribe(
       response => {
-        console.log('---------Login-response------------', response)
+        // console.log('---------Login-response------------', response)
+        this.router.navigate([this.returnUrl]);
 
       }
     )
