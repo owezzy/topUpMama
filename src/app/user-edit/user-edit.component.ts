@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { userDetails } from '../users/model/user';
 import {UserService} from "../users/services/user.service";
 import {AuthService} from "../services/auth.service";
@@ -27,8 +27,8 @@ export class UserEditComponent implements OnInit {
     this.localData = this.authService.userValue
 
     this.form = this.fb.group({
-      name: [this.localData.name],
-      job_title: [this.localData.job_title],
+      name: [this.localData.name, Validators.required],
+      job_title: [this.localData.job_title, Validators.required],
     });
   }
 
