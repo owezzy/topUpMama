@@ -8,7 +8,7 @@
     </mat-card-header>
     <mat-card-content>
       <table mat-table fxFill [dataSource]="dataSource">
-        <ng-container matColumnDef="isSelected">
+        <ng-container style="margin: 13px" matColumnDef="isSelected">
           <th mat-header-cell *matHeaderCellDef>
             <div  fxLayout="column" fxLayoutAlign="start start">
               <mat-checkbox (change)="$event ? masterToggle() : null"
@@ -133,9 +133,9 @@
     </mat-card-content>
     <mat-card-actions>
       <div style="margin: 12px" fxLayout="row" fxLayoutAlign="space-around center" >
-        <button mat-raised-button color="primary" [disabled]="testForm.enabled && testForm.invalid" (click)="save(testForm);">SAVE</button>
-        <button class="button-remove-rows" mat-button color="warn" (click)="removeSelectedRows()">Remove Rows</button>
-        <button class="button-add-row" mat-button color="primary" (click)="addRow()">Add Row</button>
+        <button mat-raised-button color="primary" [disabled]="testForm.enabled && testForm.invalid" (click)="save(testForm);">Update</button>
+        <button class="button-remove-rows" mat-button color="warn" [disabled]="testForm.enabled && testForm.invalid" (click)="removeSelectedRows()">Remove Rows</button>
+        <button class="button-add-row" mat-button color="primary"[disabled]="testForm.enabled && testForm.invalid"  (click)="addRow()">Add Row</button>
       </div></mat-card-actions>
   </mat-card>
 </form>

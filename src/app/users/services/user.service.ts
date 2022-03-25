@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import {Observable, forkJoin, map, tap} from 'rxjs'
-import { User } from '../model/user'
+import {User, userDetails} from '../model/user'
 import {environment} from "../../../environments/environment";
 import {UiService} from "../../services/ui.service";
 
@@ -21,8 +21,9 @@ export class UserService {
     return this.http.get<User[]>(this.serviceUrl)
   }
 
-  updateUser(user: User): Observable<User> {
-    return this.http.patch<User>(`${this.serviceUrl}/${user.id}`, user).pipe(
+  updateUser(user: User, userDetail?:userDetails): Observable<User> {
+    console.log('--------updateUser------', user, userDetail)
+    return this.http.patch<User>(`${this.serviceUrl}/${user.id}`, userDetail).pipe(
       map(resp => {
         // console.log(resp)
         return resp

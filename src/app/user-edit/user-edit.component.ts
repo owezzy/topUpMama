@@ -42,9 +42,10 @@ export class UserEditComponent implements OnInit {
 
   get name() { return this.form.get('name'); }
   get job_title() { return this.form.get('job_title'); }
-  submit() {
-    this.submitted.emit(this.form.getRawValue());
-    this.form.reset();
+
+  submit(data:any) {
+    this.submitted.emit(data);
+    return this.form.reset();
   }
 
 }

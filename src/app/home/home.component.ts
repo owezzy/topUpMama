@@ -33,7 +33,12 @@ export class HomeComponent implements OnInit {
   };
 
   onSubmitted(user: userDetails) {
+
+    const localUser = this.authService.userValue
     this.userDetails = user;
+    console.log(localUser)
+    console.log(this.userDetails)
+    this.userService.updateUser(localUser, user).subscribe()
   }
 
   currentUser$!: Observable<any>
