@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable, forkJoin } from 'rxjs'
+import {Observable, forkJoin, map, tap} from 'rxjs'
 import { User } from '../model/user'
 import {environment} from "../../../environments/environment";
+import {UiService} from "../../services/ui.service";
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,8 @@ import {environment} from "../../../environments/environment";
 export class UserService {
   private serviceUrl = `${environment.backendUrl}/users`
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private uiService: UiService) {}
 
   getCurrentUser(id:number): Observable<any> {
     return this.http.get(this.serviceUrl+`/${id}`)
@@ -20,7 +22,15 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<User> {
-    return this.http.patch<User>(`${this.serviceUrl}/${user.id}`, user);
+    return this.http.patch<User>(`${this.serviceUrl}/${user.id}`, user).pipe(
+      map(resp => {
+        // console.log(resp)
+        return resp
+      }),
+      tap(() => {
+        const config = this.uiService.toastConfig()
+        this.uiService.showToast('User Updated Successful', 'Close', config)
+      }));
   }
 
   addUser(user: User): Observable<User> {

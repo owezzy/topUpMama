@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {interval, map, Observable, shareReplay, Subscription} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
+
+import {CountdownConfig} from "ngx-countdown";
 import {AuthService} from "../services/auth.service";
-import {calcDateDiff} from "../../assets/common-functions";
 
 @Component({
   selector: 'app-footer',
@@ -13,7 +13,6 @@ import {calcDateDiff} from "../../assets/common-functions";
         text-align: center;
         font-family: Arial, sans-serif;
         font-size: 1em;
-        letter-spacing: -1px;
         margin: 5px;
       }
       .timer span {
@@ -21,26 +20,39 @@ import {calcDateDiff} from "../../assets/common-functions";
         margin: 5px;
       }
     `
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FooterComponent implements OnDestroy  {
-  constructor() {
-    this.timeLeft$ = interval(1000).pipe(
-      map(x => calcDateDiff()),
-      shareReplay(1)
-    );
+export class FooterComponent implements OnInit,OnDestroy  {
+  public timeLeft$: Observable<any>;
+
+  subscription!: Subscription;
+  minutes: number = 10
+
+  config: CountdownConfig = { stopTime: new Date().getTime() + this.minutes * 60000 };
+
+  constructor(
+    private authService: AuthService
+  ) {
+    this.timeLeft$ = interval( 1000).pipe(
+      map(() => new Date().getTime()),
+    shareReplay(1),
+  );
+
   }
 
-  public timeLeft$: Observable<FooterComponent>;
+  show = this.authService.userSubject.asObservable()
+  ngOnInit(): void {
+    //emit value in sequence every 10 minutes
+    const source = interval(this.minutes* 60000);
+    this.subscription = source.subscribe(val => this.resetStop());
+  }
 
-  private subscription!: Subscription;
 
-
-
-  public secondsToDay!:number;
-  public minutesToDay!: number;
-  public hoursToDay!: number;
-  public daysToDay!: number;
+  resetStop() {
+    console.log('----resetStop-------')
+    return this.config = { stopTime: new Date().getTime() + this.minutes * 60000 };
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

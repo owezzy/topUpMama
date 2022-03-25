@@ -1,9 +1,7 @@
 <div fxLayout="row" class="timer" fxLayoutAlign="end center" *ngIf="(timeLeft$ | async) as t; else sorry">
-  <span> Countdown to Token Refresh</span>
-  <span id="minutes"> {{t.minutesToDay}} </span>Min
-  <span id="seconds"> {{t.secondsToDay}} </span>S
+  Token Lifetime: <countdown fxLayout="row" class="timer" fxLayoutAlign="end center" [config]="config"></countdown>
 </div>
-
 <ng-template #sorry>
   Sorry, something went wrong...
 </ng-template>
+

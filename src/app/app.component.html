@@ -12,7 +12,7 @@
 <mat-sidenav-container class="app-sidenav-container">
   <mat-sidenav
     #sidenav
-    [mode]="'over'"
+    [mode]="'side'"
     (click)="sidenav.toggle()">
     <mat-nav-list>
       <a
@@ -39,6 +39,14 @@
           <mat-icon class="nav-icons">people </mat-icon>
           Users
         </a>
+      <a
+          mat-list-item
+          routerLinkActive="active-link"
+          [routerLink]="['form']"
+        >
+          <mat-icon class="nav-icons">people </mat-icon>
+          Users2
+        </a>
       <mat-divider></mat-divider>
       <a
           mat-list-item
@@ -58,5 +66,5 @@
     <router-outlet #outlet="outlet"></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-<app-footer></app-footer>
+<app-footer *ngIf="authState.isLoggedIn"></app-footer>
 </div>

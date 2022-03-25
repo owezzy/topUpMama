@@ -1,0 +1,80 @@
+<h1 *ngIf="userDetails">Edit Your Details</h1>
+
+<mat-card>
+
+<!--<form [formGroup]="form" (ngSubmit)="submit()">-->
+<!--  <label>Name</label>-->
+<!--  <input type="text" formControlName="name" /><br />-->
+
+<!--  <label>Job Title</label>-->
+<!--  <input type="text" formControlName="job_title" /><br />-->
+
+
+<!--  <button type="submit">Submit</button>-->
+<!--</form>-->
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    fxLayout="column"
+  >
+    <!-- EMAIL  -->
+    <div fxLayout="row" fxLayoutAlign="space-evenly center">
+      <mat-icon >email</mat-icon>
+      <mat-form-field fxFlex>
+        <input
+          matInput
+          type="text"
+          placeholder="Edit your name"
+          aria-label="Name"
+          formControlName="name"
+        />
+        <mat-error
+          *ngIf="name?.hasError('required')"
+        >
+          Name is required
+        </mat-error>
+
+      </mat-form-field>
+
+    </div>
+
+    <!-- job title  -->
+    <div fxLayout="row" fxLayoutAlign="space-evenly center">
+      <mat-icon matPrefix>vpn_key</mat-icon>
+      <mat-form-field fxFlex >
+        <input
+          matInput
+          placeholder="Job Title"
+          aria-label="Job Title"
+          formControlName="job_title"
+        />
+        <mat-error
+          *ngIf="job_title?.hasError('required')"
+        >
+          Job title is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+
+    <!-- CTA BUTTONS  -->
+    <div
+      fxLayout="column"
+      fxLayoutAlign="start stretch"
+      class="sign-up-buttons"
+    >
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        [disabled]="form.invalid"
+      >
+        Update
+      </button>
+
+
+    </div>
+  </form>
+</mat-card>

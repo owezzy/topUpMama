@@ -1,10 +1,11 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
-import {MatTableDataSource} from "@angular/material/table";
+import { MatTableDataSource} from "@angular/material/table";
 import {User, UserSchema} from "./model/user";
 import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "./services/user.service";
 import {ConfirmDialogComponent} from "./confirm-dialog/confirm-dialog.component";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-users',
@@ -14,7 +15,7 @@ import {ConfirmDialogComponent} from "./confirm-dialog/confirm-dialog.component"
       width: 100%;
       height: 100%;
     }
-    img { width: 50px; height: 50px; margin: 8px}
+    img { width: 50px; height: 50px; padding: 0; margin: 0;}
     `
   ]
 })
@@ -25,14 +26,17 @@ export class UsersComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<User>();
   itemsPerPage!: number;
   currentPage!: number;
+  todaysDate!: Date;
 
   constructor(
-    public dialog: MatDialog, private userService: UserService
-  ) { }
+    public dialog: MatDialog,
+    private userService: UserService
+  ) {
+
+    this.todaysDate = new Date();}
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe((res) => {
-      console.error(res)
       this.itemsPerPage = res.per_page;
       this.currentPage = res.pages;
       this.dataSource.data = res.data;

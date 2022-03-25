@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {routeAnimations} from "../assets/animations/route.animations";
 import {AuthService} from "./services/auth.service";
@@ -14,7 +14,6 @@ import {AuthService} from "./services/auth.service";
 })
 export class AppComponent {
 
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -27,4 +26,5 @@ export class AppComponent {
   signOut() {
     this.authService.logout()
   }
+
 }

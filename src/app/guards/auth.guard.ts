@@ -11,7 +11,6 @@ export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
     private authenticationService: AuthService,
-    private uiService: UiService
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -22,10 +21,7 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
       // not logged in so redirect to login page with the return url
-      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } }).then(() =>{
-        const config = this.uiService.toastConfig()
-        this.uiService.showToast('You Need to Login to Continue', 'Close', config)
-      });
+      this.authenticationService.logout(state)
       return false;
     }
   }

@@ -1,0 +1,143 @@
+<ng-container style="margin: 11px;">
+  <div  style="margin: 8px" class="mat-elevation-z8">
+<form #testForm="ngForm" (ngSubmit)="testForm.form.valid" novalidate>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>TopUpMama Users</mat-card-title>
+      <mat-card-subtitle>Table with Validation</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table fxFill [dataSource]="dataSource">
+        <ng-container matColumnDef="isSelected">
+          <th mat-header-cell *matHeaderCellDef>
+            <div  fxLayout="column" fxLayoutAlign="start start">
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()"
+                          [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let employee; let rowIdx = index;">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? employee.isSelected = $event.checked : null"
+                            [checked]="selection.isSelected(employee)"
+                            [aria-label]="checkboxLabel(employee)"
+              >
+              </mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="first_name">
+          <th mat-header-cell *matHeaderCellDef>
+            first_name
+          </th>
+          <td mat-cell *matCellDef="let employee; let rowIdx = index;">
+            <mat-form-field>
+              <mat-label></mat-label>
+              <input matInput #firstName="ngModel" name="txtFirstName{{rowIdx}}" placeholder="firstName" [(ngModel)]="employee.first_name"
+                     required>
+              <mat-error *ngIf="firstName?.invalid">
+                <div *ngIf="firstName.errors?.['required']">First Name is required</div>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="last_name">
+          <th mat-header-cell *matHeaderCellDef>
+            Last Name
+          </th>
+          <td mat-cell *matCellDef="let employee; let rowIdx = index;">
+            <mat-form-field>
+              <mat-label></mat-label>
+              <input matInput #last_name="ngModel" name="txtLastName{{rowIdx}}" placeholder="Name" [(ngModel)]="employee.last_name"
+                     required>
+              <mat-error *ngIf="last_name?.invalid">
+                <div *ngIf="last_name.errors?.['required']">Last Name is required</div>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>
+            Email
+          </th>
+          <td mat-cell *matCellDef="let employee; let rowIdx = index;">
+            <mat-form-field>
+              <mat-label></mat-label>
+              <input matInput #email="ngModel" name="txtEmail{{rowIdx}}" placeholder="Email"
+                     [(ngModel)]="employee.email" required>
+              <mat-error *ngIf="email?.invalid">
+                <div *ngIf="email.errors?.['required']">Email is required</div>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="avatar">
+          <th mat-header-cell *matHeaderCellDef>
+            Avatar
+          </th>
+          <td mat-cell *matCellDef="let employee; let rowIdx = index;">
+
+              <img  [src]="employee.avatar"/>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>
+            Name
+          </th>
+          <td mat-cell *matCellDef="let employee; let rowIdx = index;">
+            <mat-form-field>
+              <mat-label></mat-label>
+              <input matInput #name="ngModel" name="txtName{{rowIdx}}" placeholder="Name" [(ngModel)]="employee.name"
+                     required>
+              <mat-error *ngIf="name?.invalid">
+                <div *ngIf="name.errors?.['required']">Name is required</div>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="job_title">
+          <th mat-header-cell *matHeaderCellDef>
+            Job Title
+          </th>
+          <td mat-cell *matCellDef="let employee; let rowIdx = index;">
+            <mat-form-field>
+              <mat-label></mat-label>
+              <input matInput #job_title="ngModel" name="txtName{{rowIdx}}" placeholder="Job Title" [(ngModel)]="employee.job_title"
+                     required>
+              <mat-error *ngIf="job_title?.invalid">
+                <div *ngIf="job_title.errors?.['required']">Job title is required</div>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="isEdit">
+          <th mat-header-cell *matHeaderCellDef>
+            Actions
+          </th>
+          <td mat-cell *matCellDef="let employee; let rowIdx = index;">
+            <button mat-button class="button-remove" (click)="removeRow(employee.id)">Delete</button>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator
+            [pageSize]="itemsPerPage"
+            [pageIndex]="currentPage"
+                         showFirstLastButtons
+                         aria-label="Select page of periodic elements">
+          </mat-paginator>
+    </mat-card-content>
+    <mat-card-actions>
+      <div style="margin: 12px" fxLayout="row" fxLayoutAlign="space-around center" >
+        <button mat-raised-button color="primary" [disabled]="testForm.enabled && testForm.invalid" (click)="save(testForm);">SAVE</button>
+        <button class="button-remove-rows" mat-button color="warn" (click)="removeSelectedRows()">Remove Rows</button>
+        <button class="button-add-row" mat-button color="primary" (click)="addRow()">Add Row</button>
+      </div></mat-card-actions>
+  </mat-card>
+</form>
+  </div>
+</ng-container>

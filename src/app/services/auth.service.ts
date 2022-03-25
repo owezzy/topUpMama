@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, EMPTY, map, Observable, of, tap, throwError} from "rxjs";
 import {environment} from "../../environments/environment";
 import {DefaultUser, User} from "../users/model/user";
-import {Router} from "@angular/router";
+import {Router, RouterStateSnapshot} from "@angular/router";
 import {LOCAL_STORAGE_TOKEN} from "./local-storage-config";
 import {UiService} from "./ui.service";
 
@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   login(userObject: object): Observable<any> {
-    return this.httpClient.post(`${environment.backendUrl}/login`, {
+    return this.httpClient.post(`${environment.backendUrl}/register`, {
       ...userObject
     }, {withCredentials: false})
       .pipe(map(user => {
@@ -85,11 +85,11 @@ export class AuthService {
       )
   }
 
-  logout() {
+  logout(state?: RouterStateSnapshot) {
     this.stopRefreshTokenTimer();
     this.userSubject.next(DefaultUser);
     this.storage.setItem(this.AuthStateKey, JSON.stringify(DefaultUser))
-    this.router.navigate(['/login']).then(
+    this.router.navigate(['/login'], { queryParams: { returnUrl: state?.url }}).then(
       () => {
         const config = this.uiService.toastConfig()
         this.uiService.showToast('Logout Successful', 'Close', config)
@@ -98,8 +98,11 @@ export class AuthService {
     );
   }
 
-  refreshToken() {
-    return this.httpClient.get<any>(`${environment.backendUrl}/users/4`)
+  refreshToken(id?: number) {
+    if (id === undefined || null){
+      this.logout()
+    }
+    return this.httpClient.get<any>(`${environment.backendUrl}/users/${id}`)
       .pipe(map((user) => {
         // this.userSubject.next(user);
         console.log(user)

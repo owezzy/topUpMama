@@ -17,13 +17,15 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {CommonModule} from "@angular/common";
 import { UsersComponent } from './users/users.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {environment} from "../environments/environment";
 import { MapsUserLocationComponent } from './maps-user-location/maps-user-location.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import {ConfirmDialogComponent} from "./users/confirm-dialog/confirm-dialog.component";
 import {AuthService} from "./services/auth.service";
 import {appInitializer, ErrorInterceptor, JwtInterceptor} from "./_helpers";
 import { FooterComponent } from './footer/footer.component';
+import {CountdownModule} from "ngx-countdown";
+import { UserEditComponent } from './user-edit/user-edit.component';
+import { Users2Component } from './users2/users2.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { FooterComponent } from './footer/footer.component';
     UsersComponent,
     MapsUserLocationComponent,
     ConfirmDialogComponent,
-    FooterComponent
+    FooterComponent,
+    UserEditComponent,
+    Users2Component
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,8 @@ import { FooterComponent } from './footer/footer.component';
     GoogleMapsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    CountdownModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthService] },

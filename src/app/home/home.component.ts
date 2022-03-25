@@ -1,6 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {UserService} from "../users/services/user.service";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
+import {AuthService} from "../services/auth.service";
+import {User, userDetails} from "../users/model/user";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-home',
@@ -11,18 +23,31 @@ import {Observable} from "rxjs";
     }
 
     `
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
+  userDetails: userDetails = {
+    name: '',
+    job_title: '',
+  };
+
+  onSubmitted(user: userDetails) {
+    this.userDetails = user;
+  }
+
   currentUser$!: Observable<any>
   localData: any
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private authService: AuthService,
+              private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.currentUser$ = this.userService.getCurrentUser(4)
-      .pipe(
-      (data) => this.localData = data
-    )
+    this.localData = this.authService.userValue
+    this.currentUser$ = this.userService.getCurrentUser(this.localData.id)
+    console.log(this.localData)
   }
+
+
 
 }
