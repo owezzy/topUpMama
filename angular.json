@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "stream", "os"
+            ],
             "outputPath": "dist/top-up-mama",
             "index": "src/index.html",
             "main": "src/main.ts",
