@@ -24,7 +24,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       enableTracing: true,
-      onSameUrlNavigation: "reload"
+      onSameUrlNavigation: "ignore"
     }),
   ],
 

@@ -2,6 +2,7 @@ import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {EmailValidation, PasswordValidation} from "../../assets/common.validation";
 import {AuthService} from "../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sign-up',
@@ -60,7 +61,8 @@ export class SignUpComponent implements OnChanges {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
 
   }
@@ -81,7 +83,10 @@ export class SignUpComponent implements OnChanges {
       response => {
         console.log('---------response------------', response)
 
-      }
+      },
+      ()=>{},
+      () => this.router.navigate(['/home'])
+
     )
   }
 }

@@ -71,8 +71,11 @@ export class AuthService {
     }, {withCredentials: false})
       .pipe(map(user => {
           console.error('signup Response', user)
-
-          this.userSubject.next(user);
+          const value = {
+            ...user,
+            isLoggedIn: true
+          }
+          this.userSubject.next(value);
           this.startRefreshTokenTimer();
 
           return user;
@@ -81,7 +84,7 @@ export class AuthService {
           const config = this.uiService.toastConfig()
           this.uiService.showToast('Registration Successful', 'Close', config)
           this.storage.setItem(this.AuthStateKey, JSON.stringify(value))
-          })
+        })
       )
   }
 
@@ -99,9 +102,7 @@ export class AuthService {
   }
 
   refreshToken(id?: number) {
-    if (id === undefined || null){
-      this.logout()
-    }
+
     return this.httpClient.get<any>(`${environment.backendUrl}/users/${id}`)
       .pipe(map((user) => {
         // this.userSubject.next(user);
@@ -111,8 +112,8 @@ export class AuthService {
           const localUser: any = JSON.parse(localData)
 
         const currentUser =  {
-          isLoggedIn: true,
           ...localUser,
+          isLoggedIn: true,
           ...user.data
         }
           console.log('localUser',localUser)
@@ -125,7 +126,6 @@ export class AuthService {
         tap(() =>{
           const config = this.uiService.toastConfig()
           this.uiService.showToast('Token Refreshed Successful', 'Close', config)
-          this.router.navigate(['/'])
         }));
   }
 
