@@ -61,3 +61,5 @@ import 'zone.js';  // Included with Angular CLI.
 };
 (window as any).global.util = (window as any).global.util || require('util').util;
 
+import 'core-js/es/typed-array';
+import 'core-js/es/object';
