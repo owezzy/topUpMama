@@ -101,22 +101,22 @@ export class AuthService {
     );
   }
 
-  refreshToken(id?: number) {
+  refreshToken() {
+    // @ts-ignore
+    const localData:User = JSON.parse(this.storage.getItem(this.AuthStateKey))
 
-    return this.httpClient.get<any>(`${environment.backendUrl}/users/${id}`)
+    return this.httpClient.get<any>(`${environment.backendUrl}/users/${localData.id}`)
       .pipe(map((user) => {
         // this.userSubject.next(user);
         console.log(user)
-        const localData = this.storage.getItem(this.AuthStateKey)
         // @ts-ignore
-          const localUser: any = JSON.parse(localData)
 
         const currentUser =  {
-          ...localUser,
+          ...localData,
           isLoggedIn: true,
           ...user.data
         }
-          console.log('localUser',localUser)
+          console.log('localUser',localData)
           console.log('currentUser',currentUser)
         this.userSubject.next(currentUser)
           this.storage.setItem(this.AuthStateKey, JSON.stringify(currentUser))

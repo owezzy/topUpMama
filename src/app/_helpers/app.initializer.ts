@@ -6,13 +6,9 @@ export function appInitializer(authenticationService: AuthService) {
         // attempt to refresh token on app start up to auto authenticate
         // collect user data from localstorage if available
       // @ts-ignore
-      const localData:User = JSON.parse(localStorage.getItem('authState'))
-      if (localData === null){
-      } else {
-      authenticationService.refreshToken(localData.id)
+      authenticationService.refreshToken()
             .subscribe()
         // @ts-ignore
         .add(resolve);
-    }
     })
 }

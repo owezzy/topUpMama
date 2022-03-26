@@ -19,6 +19,10 @@ export class ErrorInterceptor implements HttpInterceptor {
                 // auto logout if 401 or 403 response returned from api
                 this.authenticationService.logout();
             }
+            if ([404].includes(err.status)){
+              const config = this.uiService.toastConfig()
+              this.uiService.showToast('Unknown Error, Please Contact Dev Team!', 'Close', config)
+            }
 
             const error = (err && err.error && err.error.message) || err.statusText;
             console.error(err);
