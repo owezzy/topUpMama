@@ -9,6 +9,6 @@ export function appInitializer(authenticationService: AuthService) {
       authenticationService.refreshToken()
             .subscribe()
         // @ts-ignore
-        .add(() => resolve);
+        .add(resolve);
     })
 }
