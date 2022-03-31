@@ -104,6 +104,9 @@ export class AuthService {
   refreshToken() {
     // @ts-ignore
     const localData:User = JSON.parse(this.storage.getItem(this.AuthStateKey))
+    if(localData.id === undefined || null) {
+      this.router.navigate(['/login'])
+    }
 
     return this.httpClient.get<any>(`${environment.backendUrl}/users/${localData.id}`)
       .pipe(map((user) => {
