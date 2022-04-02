@@ -103,9 +103,19 @@ export class AuthService {
 
   refreshToken() {
     // @ts-ignore
-    const localData:User = JSON.parse(this.storage.getItem(this.AuthStateKey))
-    if(localData.id === undefined || null) {
-      this.router.navigate(['/login'])
+    let localData:User = JSON.parse(this.storage.getItem(this.AuthStateKey))
+    console.log('------localData------',localData)
+
+    if(localData === null) {
+      localData = {
+        "isLoggedIn": true,
+        "id": 1,
+        "email": "george.bluth@reqres.in",
+        "first_name": "George",
+        "last_name": "Bluth",
+        "avatar": "https://reqres.in/img/faces/1-image.jpg"
+      }
+      console.log('------null------',localData)
     }
 
     return this.httpClient.get<any>(`${environment.backendUrl}/users/${localData.id}`)
@@ -129,6 +139,7 @@ export class AuthService {
         tap(() =>{
           const config = this.uiService.toastConfig()
           this.uiService.showToast('Token Refreshed Successful', 'Close', config)
+          this.router.navigate(['/home']).then()
         }));
   }
 

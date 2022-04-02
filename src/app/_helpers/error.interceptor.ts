@@ -27,7 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             const error = (err && err.error && err.error.message) || err.statusText;
             console.error(err);
             const config = this.uiService.toastConfig()
-            this.uiService.showToast(err.error.error, 'Close', config)
+            this.uiService.showToast(err.error.error ? 'Unknown Error, Please Contact Dev Team': 'No Local User Found', 'Close', config)
             return throwError(error);
         }))
     }
